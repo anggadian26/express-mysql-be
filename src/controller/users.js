@@ -1,45 +1,75 @@
-const getAllUser = (req, res) => {
-   const data = {
-      id: '1',
-      name: "Angga Dian",
-      email: "anggadian@gmail.com",
-      address: "Tlogoweru"
+const UserModel = require('../models/users')
+
+const getAllUser = async (req, res) => {
+
+   try {
+      const [data] = await UserModel.getAllUsers()
+   
+      res.json({
+         message: "GET all users success",
+         data: data
+      })
+   } catch (error) {
+      res.status(500).json({
+         message: 'Server Error',
+         serverMessage: error
+      })
    }
-   res.json({
-      message: "GET all users success",
-      data: data
-   })
 }
 
-const createNewUser = (req, res) => {
-   console.log(req.body)
-   res.json({
-      message: "CREATE new users success",
-      data: req.body
-   })
+const createNewUser = async (req, res) => {
+   const {body} = req
+   try {
+      await UserModel.createNewUser(body)
+      res.json({
+         message: "CREATE new users success",
+         data: body
+      })
+   } catch (error) {
+      res.status(500).json({
+         message: 'Server Error',
+         serverMessage: error
+      })
+   }
+   
 }
 
 
-const updateUser = (req, res) => {
+const updateUser = async (req, res) => {
    const {idUser} = req.params
-   console.log('idUser: ', idUser);
-   res.json({
-      message: "Update users success",
-      data: req.body
-   })
+   const {body} = req
+
+   try {
+      await UserModel.updateUser(body, idUser)
+      res.json({
+         message: "Update users success",
+         data: {
+            id: idUser,
+            ...body
+         }
+      })
+   } catch (error) {
+      res.status(500).json({
+         message: 'Server Error',
+         serverMessage: error
+      })
+   }
 }
 
-const deleteUser = (req, res) => {
+const deleteUser = async (req, res) => {
    const {idUser} = req.params
-   res.json({
-      message: "DELETE users success",
-      data: {
-         id: idUser,
-         name: "Angga Dian",
-         email: "angga@gmail.com",
-         address: "gatak"
-      }
-   })
+   try {
+      await UserModel.deleteUser(idUser)
+      res.json({
+         message: "DELETE users success",
+         data: null
+      })
+   } catch (error) {
+      res.status(500).json({
+         message: 'Server Error',
+         serverMessage: error
+      })
+   }
 }
 
 
