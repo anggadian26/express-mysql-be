@@ -5,6 +5,7 @@ const express = require('express');
 const userRoutes = require('./routes/users')
 
 const middlewareLogRequest = require('./middleware/logs')
+const upload = require('./middleware/multer')
 
 const app = express();
 
@@ -15,8 +16,21 @@ const app = express();
 
 app.use(middlewareLogRequest);
 app.use(express.json());
+app.use('/assets', express.static('public/images'))
 
 app.use('/users', userRoutes);
+
+app.use('/upload', upload.single('photo'), (req, res) => {
+   res.json({
+      message: 'Upload Berhasil'
+   })
+})
+
+app.use((err, req, res, next) => {
+   res.json({
+      message: err.message
+   })
+})
 
 app.listen(port, () => {
    console.log(`Server Success port ${port}`)
