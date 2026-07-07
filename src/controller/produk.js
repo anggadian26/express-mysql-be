@@ -54,8 +54,26 @@ const UpdateProduk = async (req, res) => {
    }
 }
 
+const DeleteProduk = async (req, res) => {
+   const {idProduk} = req.params
+
+   try {
+      await ProdukModel.DeleteProduk(idProduk)
+      res.json({
+         message: 'DELETE produk',
+         body: null
+      })
+   } catch (error) {
+      res.status(500).json({
+         message: 'Server Error',
+         serverMessage: error
+      })
+   }
+}
+
 module.exports= {
    getAllProduk,
    CreateNewProduk,
    UpdateProduk,
+   DeleteProduk
 }

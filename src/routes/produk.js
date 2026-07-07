@@ -13,6 +13,8 @@ router.post('/', ProdukController.CreateNewProduk)
 // update patch
 router.patch('/:idProduk', ProdukController.UpdateProduk)
 
+// Delete produk
+router.delete('/:idProduk', ProdukController.DeleteProduk)
 
 
 module.exports = router;

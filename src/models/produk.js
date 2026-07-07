@@ -20,8 +20,15 @@ const UpdateProduk = (body, idProduk) => {
    return dbPool.execute(SQLQuery)
 }
 
+const DeleteProduk = (idProduk) => {
+   const SQLQuery = `DELETE FROM produk WHERE id='${idProduk}'`
+
+   return dbPool.execute(SQLQuery)
+}
+
 module.exports = {
    getAllProduk,
    CreateNewProduk,
-   UpdateProduk
+   UpdateProduk,
+   DeleteProduk
 }
