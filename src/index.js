@@ -4,6 +4,7 @@ const express = require('express');
 
 const userRoutes = require('./routes/users')
 const produkRoutes = require('./routes/produk')
+const stokProdukRoutes = require('./routes/stokProduk')
 
 const middlewareLogRequest = require('./middleware/logs')
 const upload = require('./middleware/multer')
@@ -21,6 +22,7 @@ app.use('/assets', express.static('public/images'))
 
 app.use('/users', userRoutes);
 app.use('/produk', produkRoutes)
+app.use('/stok-produk', stokProdukRoutes);
 
 app.use('/upload', upload.single('photo'), (req, res) => {
    res.json({
